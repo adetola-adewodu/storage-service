@@ -1,4 +1,5 @@
 # storage-service
+Rest API that is used to store and retrieve files from s3
 
 # create .env
 1. Create .env file
