@@ -55,8 +55,8 @@ def read_root():
 #         content="/write {} successfully written to S3".format(file.filename)
 #     )
 
-@app.get("/read/", 
-    summary="Return s3file data for a given the s3 file path", description="Returns s3file data for a given the s3 file path")
+@app.get("/show/", 
+    summary="Return shows the file given the s3 file path", description="Returns s3file data for a given the s3 file path")
 def read(s3file: str):
     bucket, key = get_bucket_and_key(s3file)
     try:      
