@@ -2,6 +2,7 @@ import os
 
 import requests
 import boto3
+from botocore.exceptions import ClientError
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, Response, UploadFile, status
 from fastapi.responses import JSONResponse
@@ -21,39 +22,25 @@ OBJECT_BUCKET = os.getenv('S3_BUCKET_NAME')
 def read_root():
     return {"Data Query Service": "Running"}
 
-# def get_s3_object():
-#     try:
-#         session = boto3.Session(
-#             aws_access_key_id=os.getenv('AWS_ID'),
-#             aws_secret_access_key=os.getenv('AWS_KEY')
-#         )
-#         return session.resource('s3')
-#     except ConfigNotFound as cnf:
-#         logger.error(cnf)
-#         return Response(cnf)
-#     except ClientError as ce:
-#         logger.error(ce)
-#         return Response(ce)
+@app.post("/write/", summary="Write a file to a s3 bucket", description="Write a file to a s3 bucket")
+async def write(file: UploadFile = File(...)):
+    data = None
+    file_name = file.filename
+    s3 = boto3.resource('s3')
+    try:
+        s3_object = s3.Object(OBJECT_BUCKET, file_name)
+        data = await file.read()
+        if data:
+            s3_object.put(Body=data)
+    except ClientError as e:
+        FILE_NAME_ERROR = "/write file-name{} could not write to S3 \n".format(file_name)
+        logger.error(FILE_NAME_ERROR, e)
+        return Response(FILE_NAME_ERROR, status_code=status.HTTP_400_BAD_REQUEST)
 
-# @app.post("/write/", tags=["custom path"], summary="Write a file to a s3 bucket", description="Write a file to a s3 bucket")
-# async def write(file: UploadFile = File(...)):
-#     data = None
-#     file_name = file.filename
-#     s3 = get_s3_object()
-#     try:
-#         s3_object = s3.Object(OBJECT_BUCKET, 'inbox/'+file_name)
-#         data = await file.read()
-#         if data:
-#             s3_object.put(Body=data)
-#     except ClientError as e:
-#         FILE_NAME_ERROR = "/write file-name{} could not write to S3 \n".format(file_name)
-#         logger.error(FILE_NAME_ERROR, e)
-#         return Response(FILE_NAME_ERROR, status_code=status.HTTP_400_BAD_REQUEST)
-
-#     return Response(
-#         status_code=status.HTTP_201_CREATED,
-#         content="/write {} successfully written to S3".format(file.filename)
-#     )
+    return Response(
+        status_code=status.HTTP_201_CREATED,
+        content="/write {} successfully written to S3".format(file.filename)
+    )
 
 @app.get("/show/", 
     summary="Return shows the file given the s3 file path", description="Returns s3file data for a given the s3 file path")
