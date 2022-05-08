@@ -55,6 +55,21 @@ def read_root():
 #         content="/write {} successfully written to S3".format(file.filename)
 #     )
 
+@app.get("/read/", 
+    summary="Return s3file data for a given the s3 file path", description="Returns s3file data for a given the s3 file path")
+def read(s3file: str):
+    bucket, key = get_bucket_and_key(s3file)
+    try:      
+        s3_response = get_presigned_url_response(bucket, key)
+    except Exception as e:
+        logger.error(e)
+        logger.error("Problem reading file from S3")
+        return JSONResponse(status_code=500, content="Problem reading file from S3")
+    return Response(
+        status_code=200,
+        content=s3_response.content
+    )
+
 # Return s3 presigned url given a bucket and key
 def get_presigned_url_response(bucket: str, key: str): 
     url = get_created_presigned_url(bucket, key)
