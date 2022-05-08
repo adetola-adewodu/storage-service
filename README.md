@@ -1,5 +1,13 @@
 # storage-service
 
+# create .env
+1. Create .env file
+2. Add `S3_BUCKET_NAME = '[your bucket name]'`
+
+# export AWS environment varibles 
+1. set up local environment variables, either by running `export` command or adding permanently to bash/zsh profile (preferred)
+    - `export AWS_SECRET_ACCESS_KEY=<aws-secret-key>`
+    - `export AWS_ACCESS_KEY_ID=<aws-id>`
 
 ## Initial Run
 1. `python3 -m venv env`
