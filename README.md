@@ -34,17 +34,27 @@ Rest API that is used to store and retrieve files from s3
 
     actor Client
 
+    autonumber
+
     Client -> "Storage Service Rest API": POST /write
     "Storage Service Rest API" -> "AWS S3": write(file)
     "AWS S3" -> "Storage Service Rest API": OK
+    "Storage Service Rest API" -> Client: OK
+
+    autonumber
 
     Client -> "Storage Service Rest API": GET /show
     "Storage Service Rest API" ->  "AWS S3": read(s3file)
     "AWS S3" -> "Storage Service Rest API": s3file
+    "Storage Service Rest API" -> Client: s3file
+
+    autonumber
 
     Client -> "Storage Service Rest API": GET /presigned/
     "Storage Service Rest API" ->  "AWS S3": get_presigned_url(s3file)
     "AWS S3" -> "Storage Service Rest API": s3file_url
+    "Storage Service Rest API" -> Client: s3file_url
+    
 
     @enduml
 
