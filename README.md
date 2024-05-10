@@ -19,11 +19,11 @@ Rest API that is used to store and retrieve files from s3
 
 ## Create Sequence Diagram
 
-1. Install plantuml on command line
+### Install plantuml on command line
     
-    brew install plantuml
+brew install plantuml
 
-2. Run following plantuml command
+### Run following plantuml command
     
     plantuml -tsvg README.md
 
