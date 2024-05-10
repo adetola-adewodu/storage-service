@@ -21,7 +21,7 @@ Rest API that is used to store and retrieve files from s3
 
 ### Install plantuml on command line
     
-brew install plantuml
+    brew install plantuml
 
 ### Run following plantuml command
     
