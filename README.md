@@ -29,21 +29,22 @@ Rest API that is used to store and retrieve files from s3
 
 ![](StorageServiceDiagram.svg)
 <div hidden>
-@startuml StorageServiceDiagram
+    
+    @startuml StorageServiceDiagram
 
-actor Client
+    actor Client
 
-Client -> "Storage Service Rest API": POST /write
-"Storage Service Rest API" -> "AWS S3": write(file)
+    Client -> "Storage Service Rest API": POST /write
+    "Storage Service Rest API" -> "AWS S3": write(file)
 
-Client -> "Storage Service Rest API": GET /show
-"Storage Service Rest API" ->  "AWS S3": read(s3file)
-"AWS S3" -> "Storage Service Rest API": s3file
+    Client -> "Storage Service Rest API": GET /show
+    "Storage Service Rest API" ->  "AWS S3": read(s3file)
+    "AWS S3" -> "Storage Service Rest API": s3file
 
-Client -> "Storage Service Rest API": GET /presigned/
-"Storage Service Rest API" ->  "AWS S3": get_presigned_url(s3file)
-"AWS S3" -> "Storage Service Rest API": s3file_url
+    Client -> "Storage Service Rest API": GET /presigned/
+    "Storage Service Rest API" ->  "AWS S3": get_presigned_url(s3file)
+    "AWS S3" -> "Storage Service Rest API": s3file_url
 
-@enduml
+    @enduml
 
 </div>
