@@ -29,13 +29,14 @@ Rest API that is used to store and retrieve files from s3
 
 ![](StorageServiceDiagram.svg)
 <div hidden>
-    
+
     @startuml StorageServiceDiagram
 
     actor Client
 
     Client -> "Storage Service Rest API": POST /write
     "Storage Service Rest API" -> "AWS S3": write(file)
+    "AWS S3" -> "Storage Service Rest API": OK
 
     Client -> "Storage Service Rest API": GET /show
     "Storage Service Rest API" ->  "AWS S3": read(s3file)
