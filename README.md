@@ -22,7 +22,9 @@ Rest API that is used to store and retrieve files from s3
 1. Install plantuml on command line
     
     brew install plantuml
+
 2. Run following plantuml command
+    
     plantuml -tsvg README.md
 
 ## Sequence Diagram: 
