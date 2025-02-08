@@ -29,7 +29,7 @@ Rest API that is used to store and retrieve files from s3
 
 ## Sequence Diagram: 
 
-![](StorageServiceDiagram.svg)
+![Storage Service Diagram](StorageServiceDiagram.svg)
 <div hidden>
 
     @startuml StorageServiceDiagram
